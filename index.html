@@ -70,7 +70,35 @@
             <h1>Aplicación de Gestion de Mailing</h1>
         </header>
         <main id="page-body">
-            Bienvenido a la aplicación de M. Monas para la gestión de Mailing.
+            <section id="home">
+                <h2>Bienvenido a la aplicación de M. Monas para la gestión de Mailing.</h2>
+            </section>
+            <section class="flexcontainer"  id="contact">
+                <header><h2>Formulario de Contacto</h2></header>
+                <div class="flexcontainer">
+                    <form class="flexcontainer" id="contactForm" action="#" method="post">
+                        <div class="flexcontainer">
+                            <label for="nombre">Nombre</label>
+                            <input  type="text" name="nombre" id="nombre"/>
+                            <div class="text-error"></div>
+                        </div>
+                        <div class="flexcontainer">
+                            <label for="apellidos">Apellidos</label>
+                            <input  type="text" name="apellidos" id="apellidos"/>
+                            <div class="text-error"></div>
+
+                        </div>
+                        <div class="flexcontainer">
+                            <label for="telefono">Telefono:</label>
+                            <input type="text" name="telefono" id="telefono"/>
+                            <div class="text-error"></div>
+                        </div>
+                        <div class="flexcontainer">
+                            <button class="">Enviar</button>
+                        </div>
+
+                    </form>
+                </div>
         </main>
         <footer id="page-footer">
             <a href="http://formacion.ipartek.com" target="_blank">Ipartek S. Coop.</a>
