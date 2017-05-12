@@ -1,8 +1,13 @@
-var alumnos = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+var alumnos=[{"codigo":1,"nombre":"Maite","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"},
+    {"codigo":2,"nombre":"Paco","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"}
+    ,{"codigo":3,"nombre":"Rafa","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"},
+    {"codigo":4,"nombre":"Lourdes","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"}];
+
 $.noConflict();
 jQuery(document).ready(function($) {
     // Code that uses jQuery's $ can follow here.
     $("#contactForm").on("submit",validarFormularioContacto);
+    $("#listadoAlumnos a:last-child").click(borrarVarios);
     $("#borrartodos").click(function (event) {
         //attr ---> cambios de atributos
         // prop --> propiedades
@@ -20,6 +25,30 @@ jQuery(document).ready(function($) {
 
     });
 
+    /*boton individual de borra y editar contacto*/
+    $("#tablaAlumnos").on("click","td:last-child button:last-child",function(){
+        var  codigo = $(this).parents("tr").find("input[type=checkbox]").val();
+        var nombre =  $(this).parents("tr").find("td:nth-child(2)").text();
+        console.log(nombre);
+    });
+    $("#tablaAlumnos").on("click","td:last-child button:first-child",function(){
+        console.log("PRI");
+        var codigo;
+        codigo = $(this).parents("tr").find("input[type=checkbox]").val();
+        console.log(codigo);
+        $(this).parents("tr").remove();
+    });
+    function borrarVarios(){
+        //recoger los checksboxes marcados
+        $("#tablaAlumnos tbody input:checked").each(function () {
+            var codigo = $(this).val();
+            //Llamar al REST
+            $(this).parents("tr").remove();
+            //actualizar el nº de alumnos
+
+        });
+
+    }
     function validarFormularioContacto(){
         //recoger los valores de la vista
         var pdni = $("#dni").val();
@@ -64,9 +93,15 @@ jQuery(document).ready(function($) {
         if (alumnos.length > 0) {
             for (var i=0; i< alumnos.length;i++) {
                 console.log(alumnos[i]);
-                var texto = "<tr><td><input type='checkbox' value='" + alumnos[i] + "'></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                var codigo=alumnos[i].codigo;
+                var nombre=alumnos[i].nombre;
+                var apellidos =alumnos[i].apellidos;
+                var email =alumnos[i].email;
+                var dni =alumnos[i].dni;
+                var htmlEdit = "<button>Editar</button>";
+                var htmlDelete = "<button>Borrar</button>";
+                var texto = "<tr><td><input type='checkbox' value='" + codigo + "'></td><td>" +nombre+ "</td><td>" +apellidos+ "</td><td>" +email+ "</td><td>"+dni+"</td><td>"+htmlDelete + htmlEdit+"</td></tr>";
                 //añadir el html correspondiente a la página
-                console.log(texto);
                 $("#tablaAlumnos tbody").append(texto);
                 //-->
             }
