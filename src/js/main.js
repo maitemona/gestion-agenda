@@ -3,8 +3,9 @@ var alumnos=[{"codigo":1,"nombre":"Maite","apellidos":"Monasterio Herrero","dni"
     ,{"codigo":3,"nombre":"Rafa","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"},
     {"codigo":4,"nombre":"Lourdes","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"}];
 
+var $ = require('jquery');
 $.noConflict();
-jQuery(document).ready(function($) {
+$(document).ready(function($) {
     // Code that uses jQuery's $ can follow here.
     $("#contactForm").on("submit",validarFormularioContacto);
     $("#listadoAlumnos a:last-child").click(borrarVarios);
