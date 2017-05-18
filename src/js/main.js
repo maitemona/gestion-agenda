@@ -2,13 +2,58 @@ var alumnos=[{"codigo":1,"nombre":"Maite","apellidos":"Monasterio Herrero","dni"
     {"codigo":2,"nombre":"Paco","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"}
     ,{"codigo":3,"nombre":"Rafa","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"},
     {"codigo":4,"nombre":"Lourdes","apellidos":"Monasterio Herrero","dni":"16071559X","email":"maitemonastreio@gmail.com"}];
-
+/*javascript 5
 var $ = require('jquery');
-$.noConflict();
-$(document).ready(function($) {
+*/
+/*javascrip 6*/
+import $ from "jquery";
+window.jQuery = window.$ = $;
+import * as categoria from "./categorias";
+var $listadoCategorias =$("#listadoCategorias");
+require("bootstrap");
+
+
+
+/*****Categoriadas*//////
+
+if($listadoCategorias.length) {//estamos en la página de acategorias
+    var cs = new categoria.CategoriaService();
+
+    cs.getAll()
+        .then(function (data) {
+             console.log(data);
+            cargarArrayCategorias(JSON.parse(data));
+        }, function (error) {//error
+            console.log(error);
+        }).catch(function () {
+
+    });
+}
+
+$("#tablaCategorias").on("click","td:last-child button:first-child",function(){
+    var cs = new categoria.CategoriaService();
+    console.log("PRI");
+    var codigo;
+    codigo = $(this).parents("tr").find("input[type=checkbox]").val();
+    console.log(codigo);
+ //   $(this).parents("tr").remove();
+    cs.getById(codigo)
+        .then(function (data) {
+            console.log(data);
+           // cargarArrayCategorias(JSON.parse(data));
+        }, function (error) {//error
+            console.log(error);
+        }).catch(function () {
+
+    });
+});
+//$.noConflict();
+//$(document).ready(function($) {
     // Code that uses jQuery's $ can follow here.
     $("#contactForm").on("submit",validarFormularioContacto);
+
     $("#listadoAlumnos a:last-child").click(borrarVarios);
+
     $("#borrartodos").click(function (event) {
         //attr ---> cambios de atributos
         // prop --> propiedades
@@ -112,7 +157,7 @@ $(document).ready(function($) {
             $("#listadoAlumnos").text("No se han encontrado alumnos")
         }
     }
-});
+//});
 
 function validarNombre(nombre){
     const pattern = new RegExp(/[a-zA-Z]{3,}/);
@@ -144,4 +189,31 @@ function validarDni(dni) {
         }
     }
     return valido;
+}
+
+
+/***CAtegorias*/////
+
+function cargarArrayCategorias(categorias) {
+    //recorrer el array
+    console.log("----<>>>"+categorias.length );
+    if (categorias.length > 0)
+    {
+        for(var i = 0; i < categorias.length; i++) {
+            console.log(categorias[i]);
+            var codigo = categorias[i].idcategoria;
+            console.log("----->codigo:"+ codigo);
+            var nombre = categorias[i].ncategoria;
+            var htmlEdit ="<button>Editar</button>";
+            var htmlDelete ="<button>Borrar</button>";
+            var texto = "<tr><td><input type='checkbox' value='" + codigo + "'></td><td>"+nombre+"</td><td>"+htmlEdit+htmlDelete+"</td></tr>";
+            //añadir el html correspondiente a la página
+            console.log("----->codigo:"+ texto);
+            $("#tablaCategorias tbody").append(texto);
+        }
+        $("#tablaCategorias tfoot td").html("<span class='text-error'>Total Categorias:"+categorias.length,10+"</span>");
+    }else
+    {
+        $("#listadoCategorias").append("No se han encontrado categorias")
+    }
 }
