@@ -1,7 +1,7 @@
 /**
  * Created by Curso on 18/05/2017.
  */
-
+"use strict";
 //module categorias
 import * as service from "./genericservice";
 const urlCategorias = "http://localhost:8080/agenda/api/categorias";
@@ -18,6 +18,86 @@ export class CategoriaService extends service.GenericService {
         return super.ajax(urlCategorias+"/"+idcategoria,"get",null);
     }
 }
+
+export  function rederizarFormulario(codigo = -1){
+    let cs = new CategoriaService();
+    let categoria = new Categoria();
+    let txt ="";
+    return new Promise(function(resolve, reject) {
+        if(codigo > -1){
+            cs.getById(codigo)
+                .then(function(cate){
+                    txt = parseForm(JSON.parse(cate));
+                    resolve(txt);
+                })
+                .catch(function () {
+                    reject("No se han podido acceder a los datos del codigo "+codigo);
+                });
+        }else{
+            txt = parseForm(alumno);
+            resolve(txt);
+        }
+    });
+
+
+    //rellaner datos en el form
+}
+
+
+
+ function parseForm(categoria) {
+ let txt="";
+ txt +="<form action='#' id='categoriaForm' method='post'>";
+ txt += "<input type='text' name='nombre'"
+ +" id='nombre' value='"+categoria.ncategoria+"'>"
+ txt+="</form>";
+ return txt;
+ }
+
+
+export function renderizar () {
+    let cs = new CategoriaService();
+    let txt = "";
+    return new Promise(function(resolve, reject) {
+        cs.getAll().then(function(data) {
+            let categorias = JSON.parse(data);
+               console.log(data);
+            if (categorias.length > 0) {
+                txt ="<table data-table='categorias' id='tablaCategorias' class='rwd-table'><thead><tr>"
+                    +"<th><input type='checkbox' name='borrartodos' id='borrartodos'/></th>"
+                    +"<th>Nombre</th>"
+                    +"<th></th></tr></thead><tbody>";
+                for (let i = 0; i < categorias.length; i++) {
+                    let categoria = categorias[i];
+                    console.log("CATEGORIA:" +categoria);
+                    txt += parseCategoria(categoria);
+                }
+                txt+="</tbody><tfoot><tr><td colspan='3'>Total Categorias: "+categorias.length+"</td></tr></tfoot></table>";
+            }else{
+                txt ="no se encuentran categorias en la BBDD";
+            }
+            resolve(txt)
+        }, function(error) {//error
+            console.log(error);
+            txt ="error en la carga de categorias";
+            reject(txt);
+        });
+    });
+}
+function parseCategoria (categoria){
+    let codigo = categoria.idcategoria;
+    let nombre = categoria.ncategoria;
+   /* let apellidos = alumno.apellidos;
+    let email = alumno.email;
+    let dni = alumno.dni;*/
+    let htmlEdit ="<button>Editar</button>";
+    let htmlDelete ="<button>Borrar</button>";
+
+    let texto = "<tr><td><input type='checkbox' value='" + codigo + "'></td><td>"+nombre+"</td><td>"+htmlEdit+htmlDelete+"</td></tr>";
+
+    return texto;
+}
+
 export class Categoria {
     constructor(){
         this._idcategoria= -1;

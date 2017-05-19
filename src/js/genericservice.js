@@ -5,6 +5,7 @@ export class GenericService {
     constructor(){
 
     }
+
     ajax(url,method,data) {
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest();
