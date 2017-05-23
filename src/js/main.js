@@ -45,6 +45,7 @@ if($listadoCategorias.length) {//estamos en la página de categorias
     });
 }
 $listadoCategorias.find("div a:last-child").click(borrarVarios);
+/*$listadoCategorias.find("div a:first-child").click(crearItem);*/
 /*
 $listadoCategorias.find("#tablaCategorias tbody").on("click","td:last-child button:last-child",function(){
     var codigo = $(this).parents("tr").find("input[type=checkbox]").val();
@@ -80,6 +81,7 @@ $pagebody.on("click","tbody td:last-child button:first-child",function(){
 
 
 $("#listadoAlumnos a:last-child").click(borrarVarios);
+/*$("#listadoAlumnos a:first-child").click(crearNuevo);*/
 
 /*boton individual de borra y editar contacto*/
 $("#tablaAlumnos").on("click","td:last-child button:last-child",function(){
@@ -130,6 +132,16 @@ function borrarVarios() {
     });
     $("tbody tr").length;
 }
+
+/*function crearItem(){
+
+    $('#myModal').on('show.bs.modal', function (event) {
+
+        console.log("hola");
+        });
+}*/
+
+
 /*
 Solo vale para alumnos
 function borrarVarios(){
@@ -219,6 +231,28 @@ function validarDni(dni) {
         }
     }
     return valido;
+}
+
+/*MODAL*/
+/*$('#myModal').on('show.bs.modal', function (event) {
+
+    console.log("hola");
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var modal = $(this);
+    console.log(modal);
+    // modal.find('.modal-title').text('New message to ' + recipient)
+    var nombre= modal.find('.modal-body input').val();
+    console.log(nombre);
+
+});*/
+$("#myModal button:first-child").click(testFun);
+function testFun() {
+   // $('#myModal').find('.modal-body input').val("") ;
+  var ncategoria = $('#myModal').find('.modal-body input').val();
+    console.log(ncategoria);
+
+    $('#myModal').find('.modal-body input').val("");
+
 }
 
 

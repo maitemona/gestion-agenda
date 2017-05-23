@@ -34,7 +34,7 @@ export  function rederizarFormulario(codigo = -1){
                     reject("No se han podido acceder a los datos del codigo "+codigo);
                 });
         }else{
-            txt = parseForm(alumno);
+            txt = parseForm(categoria);
             resolve(txt);
         }
     });
