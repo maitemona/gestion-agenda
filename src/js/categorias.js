@@ -17,6 +17,10 @@ export class CategoriaService extends service.GenericService {
     getById(idcategoria){
         return super.ajax(urlCategorias+"/"+idcategoria,"get",null);
     }
+    create(categoria){
+        return super.ajax(urlCategorias,"post",categoria);
+    }
+
 }
 
 export  function rederizarFormulario(codigo = -1){
@@ -69,7 +73,7 @@ export function renderizar () {
                     +"<th></th></tr></thead><tbody>";
                 for (let i = 0; i < categorias.length; i++) {
                     let categoria = categorias[i];
-                    console.log("CATEGORIA:" +categoria);
+                   /* console.log("CATEGORIA:" +categoria);*/
                     txt += parseCategoria(categoria);
                 }
                 txt+="</tbody><tfoot><tr><td colspan='3'>Total Categorias: "+categorias.length+"</td></tr></tfoot></table>";
@@ -90,12 +94,28 @@ function parseCategoria (categoria){
    /* let apellidos = alumno.apellidos;
     let email = alumno.email;
     let dni = alumno.dni;*/
-    let htmlEdit ="<button>Editar</button>";
-    let htmlDelete ="<button>Borrar</button>";
+  /*  let htmlEdit ="<button>Editar</button>";*/
+    let htmlEdit='<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
+    htmlEdit+=' Dropdown';
+    htmlEdit+='<span class="caret"></span></button>';
+    htmlEdit+='<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' ;
+    htmlEdit+= ' <li><a href="#">Editar</a></li>' ;
+    htmlEdit+= ' <li><a href="#">Borrar</a></li>'  ;
 
-    let texto = "<tr><td><input type='checkbox' value='" + codigo + "'></td><td>"+nombre+"</td><td>"+htmlEdit+htmlDelete+"</td></tr>";
+  /*  htmlEdit+='<li role="separator" class="divider"></li>';
+    htmlEdit+= '<li><a href="#">Separated link</a></li>';*/
+    htmlEdit+='</ul></div>';
+  /*  let htmlDelete ="<button>Borrar</button>";*/
+
+    let texto = "<tr><td><input type='checkbox' value='" + codigo + "'></td><td>"+nombre+"</td><td>"+htmlEdit+"</td></tr>";
 
     return texto;
+
+
+
+
+
+
 }
 
 export class Categoria {

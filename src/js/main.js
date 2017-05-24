@@ -54,11 +54,16 @@ $listadoCategorias.find("#tablaCategorias tbody").on("click","td:last-child butt
 */
 
 
-$pagebody.on("click","tbody td:last-child button:last-child",function() {
+$pagebody.on("click","tbody td:last-child ul li:last-child a",function() {
+    console.log("BORRAR");
     var codigo = $(this).parents("tr").find("input[type=checkbox]").val();
     $(this).parents("tr").remove();
 });
-$pagebody.on("click","tbody td:last-child button:first-child",function(){
+//$pagebody.on("click","tbody td:last-child").find("ul").find("li:first")
+$pagebody.on("click","tbody td:last-child ul li:first-child a",function(){
+
+
+    console.log("ESTPoy"+codigo);
 //$listadoCategorias.find("#tablaCategorias tbody").on("click","td:last-child button:first-child",function(){
     var codigo = $(this).parents("tr").find("input[type=checkbox]").val();
 
@@ -248,7 +253,7 @@ function validarDni(dni) {
 $("#myModal button:first-child").click(testFun);
 function testFun() {
    // $('#myModal').find('.modal-body input').val("") ;
-  var ncategoria = $('#myModal').find('.modal-body input').val();
+    var ncategoria = $('#myModal').find('.modal-body input').val();
     console.log(ncategoria);
 
     $('#myModal').find('.modal-body input').val("");
