@@ -11,14 +11,14 @@ export class CategoriaService extends service.GenericService {
         super();
     }
     getAll(){
-        return super.ajax(urlCategorias,"get",null);
+        return super.ajax(urlCategorias,"get",null,"text");
 
     }
     getById(idcategoria){
-        return super.ajax(urlCategorias+"/"+idcategoria,"get",null);
+        return super.ajax(urlCategorias+"/"+idcategoria,"get",null,"text");
     }
     create(categoria){
-        return super.ajax(urlCategorias,"post",categoria);
+        return super.ajax(urlCategorias,"post",categoria,"json");
     }
 
 }
@@ -49,7 +49,7 @@ export  function rederizarFormulario(codigo = -1){
 
 
 
- function parseForm(categoria) {
+function parseForm(categoria) {
  let txt="";
  txt +="<form action='#' id='categoriaForm' method='post'>";
  txt += "<input type='text' name='nombre'"
@@ -60,6 +60,7 @@ export  function rederizarFormulario(codigo = -1){
 
 
 export function renderizar () {
+    console.log("ESTOY EN RENDERIZAR");
     let cs = new CategoriaService();
     let txt = "";
     return new Promise(function(resolve, reject) {
@@ -96,7 +97,7 @@ function parseCategoria (categoria){
     let dni = alumno.dni;*/
   /*  let htmlEdit ="<button>Editar</button>";*/
     let htmlEdit='<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
-    htmlEdit+=' Dropdown';
+    htmlEdit+='Acciones';
     htmlEdit+='<span class="caret"></span></button>';
     htmlEdit+='<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' ;
     htmlEdit+= ' <li><a href="#">Editar</a></li>' ;
@@ -116,6 +117,25 @@ function parseCategoria (categoria){
 
 
 
+}
+export function crearCategoria(categoriajson){
+    let cs = new CategoriaService();
+   // let categoria = new Categoria();
+
+    return new Promise(function(resolve, reject) {
+        // txt = JSON.parse(categoriajson)
+        cs.create(categoriajson).then(function (data) {
+          /*  console.log(data);*/
+            // let categorias = JSON.parse(data);
+          /*  txt = parseForm(JSON.parse(cate));-*/
+         //   console.log(txt);
+            resolve(data);
+        }, function (error) {//error
+            console.log(error);
+            reject(error);
+        });
+
+    });
 }
 
 export class Categoria {

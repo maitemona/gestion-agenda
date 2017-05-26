@@ -37,6 +37,7 @@ if($categoria.length){
 
 
 if($listadoCategorias.length) {//estamos en la página de categorias
+    console.log("LISTADO DE CATEGOTIAS:"+$listadoCategorias.length)
     let p1 = categoria.renderizar();
     p1.then(function (txt) {
         $listadoCategorias.find("div.flexcontainer:last-child").append(txt);
@@ -44,6 +45,7 @@ if($listadoCategorias.length) {//estamos en la página de categorias
 
     });
 }
+
 $listadoCategorias.find("div a:last-child").click(borrarVarios);
 /*$listadoCategorias.find("div a:first-child").click(crearItem);*/
 /*
@@ -238,27 +240,46 @@ function validarDni(dni) {
     return valido;
 }
 
+//*serializable para pasar un objeto a json*///
+$.fn.serializeObject = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
 /*MODAL*/
-/*$('#myModal').on('show.bs.modal', function (event) {
 
-    console.log("hola");
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var modal = $(this);
-    console.log(modal);
-    // modal.find('.modal-title').text('New message to ' + recipient)
-    var nombre= modal.find('.modal-body input').val();
-    console.log(nombre);
+$("#myModal button:first-child").on("click",function (event){
 
-});*/
-$("#myModal button:first-child").click(testFun);
-function testFun() {
-   // $('#myModal').find('.modal-body input').val("") ;
-    var ncategoria = $('#myModal').find('.modal-body input').val();
-    console.log(ncategoria);
+    let dataJSON1 =$('#myModal').find('.modal-body input').serializeObject();
+   // console.log(dataJSON1);
+    let dataJSON = JSON.stringify(dataJSON1);
+    /*Nueva categoria siempre sera lo que devuelve la promesa por eso se puede poner constante*/
+    const nuevoCategoria= categoria.crearCategoria(dataJSON);
+    nuevoCategoria.then(function(data) {
+        console.log(data);
+        $('#myModal').modal('hide');
+        $listadoCategorias.find("div.flexcontainer:last-child").remove();
 
-    $('#myModal').find('.modal-body input').val("");
 
-}
+      let p1 = categoria.renderizar();
+        p1.then(function (txt) {
+            $listadoCategorias.find("div.flexcontainer:last-child").append(txt);
+        }).catch(function (txt) {
+
+        });
+    });
+});
 
 
 /***CAtegorias*/////
