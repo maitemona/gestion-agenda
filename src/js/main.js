@@ -64,7 +64,10 @@ $pagebody.on("click","tbody td:last-child ul li:last-child a",function() {
 //$pagebody.on("click","tbody td:last-child").find("ul").find("li:first")
 $pagebody.on("click","tbody td:last-child ul li:first-child a",function(){
 
-
+//obtener la catgoria de bbdd
+ //renderizar el formulario
+ //modificar el formulario
+ //cambiar el boton para que en vez de guardar modifique   
     console.log("ESTPoy"+codigo);
 //$listadoCategorias.find("#tablaCategorias tbody").on("click","td:last-child button:first-child",function(){
     var codigo = $(this).parents("tr").find("input[type=checkbox]").val();

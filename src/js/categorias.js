@@ -20,7 +20,9 @@ export class CategoriaService extends service.GenericService {
     create(categoria){
         return super.ajax(urlCategorias,"post",categoria,"json");
     }
-
+    update(categoria){
+        return super.ajax(urlCategorias+"/"+categoria.codigo,"put",categoria,"json");
+    }
 }
 
 export  function rederizarFormulario(codigo = -1){
